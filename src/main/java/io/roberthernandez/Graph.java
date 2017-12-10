@@ -3,14 +3,25 @@ package io.roberthernandez;
 import java.util.*;
 // https://www.youtube.com/watch?v=SXkqUvHRgRA
 public class Graph {
+
     private Map<Integer,ArrayList<Integer>> adjListsMap;
+    private final int numVertices;
+
     public Graph(int vertices){
+        this.numVertices = vertices;
+
         adjListsMap = new HashMap<Integer,ArrayList<Integer>>();
         for(int i=1;i<=vertices;i++){
             ArrayList<Integer> neighbours = new ArrayList<Integer>();
             adjListsMap.put(i, neighbours);
         }
     }
+
+    public int getNumVertices() {
+            return this.numVertices;
+    }
+
+
     public void addEdge(int v, int w){
         if(v > adjListsMap.size() || w > adjListsMap.size()){
             return;
@@ -18,12 +29,14 @@ public class Graph {
         (adjListsMap.get(v)).add(w);
         (adjListsMap.get(w)).add(v);
     }
+
     public ArrayList<Integer> getNeighbours(int v){
         if(v>adjListsMap.size()){
             return null;
         }
         return new ArrayList<Integer>(adjListsMap.get(v));
     }
+
     public static void main(String args[]){
         int count = 1, source, dest;
         System.out.print("Enter the number of vertices and edges");
