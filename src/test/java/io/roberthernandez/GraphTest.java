@@ -19,7 +19,7 @@ public class GraphTest {
     }
 
     @Test
-    public void GetNeighborTest() {
+    public void GetEdgeNeighborTest() {
         int vertices = 2;
         Graph graph = new Graph(vertices);
         graph.addEdge(1, 2);
@@ -28,14 +28,4 @@ public class GraphTest {
         int valueAsInt = Integer.parseInt(value);
         assertEquals(valueAsInt, 2);
     }
-
-//    @Test
-//    public void addEdgeTest() {
-//        int vertices = 2;
-//        Graph graph = new Graph(vertices);
-//        graph.addEdge(1, 2);
-//        // System.out.println(graph.getNeighbours(1));
-//
-//        assertEquals(graph.getNeighbours(1), 2);
-//    }
 }
