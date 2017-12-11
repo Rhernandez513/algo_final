@@ -26,8 +26,16 @@ public class Algo_Final {
         }
 
 
-        ArrayList<String> dataContents = new ArrayList<String>(Arrays.asList(oneLine.split(delimiter)));
-        System.out.println(dataContents.get(2));
+//        ArrayList<String> dataContents = new ArrayList<String>(Arrays.asList(oneLine.split(delimiter)));
+
+        String[] dataContents = oneLine.split(delimiter);
+
+        System.out.println(dataContents[2]);
+
+        for (String item : dataContents
+             ) {
+            System.out.println(item);
+        }
 
     }
 
