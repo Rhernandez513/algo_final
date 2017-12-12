@@ -3,7 +3,7 @@ package io.roberthernandez;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Algo_Final {
 
@@ -52,23 +52,86 @@ public class Algo_Final {
         return str.substring(0, str.length() - 1);
     }
 
+    public static String[][] sortDataByASIN(String[][] data) {
+
+        Arrays.sort(data, new Comparator<String[]>() {
+            @Override
+            public int compare(final String[] entry1, final String[] entry2) {
+                final String time1 = entry1[1];
+                final String time2 = entry2[1];
+                return time1.compareTo(time2);
+            }
+        });
+        return data;
+    }
+
+    public static String[] searchForASIN(String[][] data, String ASIN) {
+        ArrayList<String> reduction = new ArrayList<String>();
+        String workingString = "";
+
+        for (int i = 0; i < data.length; ++i) {
+            if (data[i][1] == ASIN) {
+                // reviewerID
+                if (i == 0) {
+                    workingString += "ReviewerID: ";
+                    workingString += data[i][0];
+                }
+                workingString += ", ";
+                workingString += "ReviewText: ";
+                workingString += data[i][4];
+            }
+            reduction.add(workingString);
+        }
+        String [] result = reduction.toArray(new String[reduction.size()]);
+        return result;
+    }
+
+
+
+
+    // Question 4
+//    public static void givenASINOutputReviewText(Graph graph, String asin, String[][] data) {
+//
+//        ArrayList<Vertex> reduction_list = new ArrayList<>();
+//
+//        for(int i = 0; i < graph.numVertices(); ++i) {
+//            Iterable<Vertex> result =  graph.adjacentTo(data[i][1]);
+//            reduction_list.add(result);
+//        }
+//
+//        Iterable<Vertex> result =  graph.adjacentTo(data[0][1]);
+//
+//
+//        System.out.println("Adjacency: " + result.toString());
+//    }
+
+    // Question 5
+//    public static void givenReviewerIDOutputReviewText() { }
+
     public static void main(String[] args) throws IOException {
         System.out.println("Hello Algo Final!");
+        // final int line_count = 1689188;
         final int line_count = 1689188;
-        final int lines_to_read = 4;
+        final int lines_to_read = 1000;
         String[][] allData =  readDataFromFile(lines_to_read);
+
+//       String[] result = searchForASIN(allData, "0528881469");
+
+//       System.out.println(result[1]);
+
 
         Graph graph = new Graph();
 
+        // Add reviewerID's as vertex's
         for (int i = 0; i < lines_to_read; ++i) {
             graph.addVertex(allData[i][0]);
         }
-
+        // Add ASIN's as vertex's
         for (int i = 0; i < lines_to_read; ++i) {
             graph.addVertex(allData[i][1]);
         }
 
-
+        // Create edges
         for (int i = 0; i < lines_to_read; ++i) {
             String reviewerID = allData[i][0];
             String asin = allData[i][1];
@@ -79,23 +142,43 @@ public class Algo_Final {
         }
 
 
+        int numEdges = graph.numEdges();
+
         System.out.println(graph);
 
 
+        System.out.println(numEdges);
 
-            // How many unique products and unique reviewers are there?
 
-//        ArrayList<String> all_reviewer_IDs = new ArrayList<String>();
+
+
+
+
+
+
+        // Question 7
+        String[][] asin_sort_result = sortDataByASIN(allData);
+
+//        String[] specific_record = searchForASIN(allData, 100);
+//        for (String value : specific_record
+//                ) { System.out.println(value);
 //
-//        for (int i = 0; i < alldata.size(); ++i) {
-//            String reviewerID = alldata.get(i).get(0);
-//            if (!all_reviewer_IDs.contains(reviewerID)) {
-//                all_reviewer_IDs.add(reviewerID);
-//            }
 //        }
-//
-//        int unique_reviewer_count = all_reviewer_IDs.size();
-//        System.out.println("Unique Reviewers: " + unique_reviewer_count);
+
+
+        // Question 1 How many unique products and unique reviewers are there?
+
+        HashSet<String> all_reviewer_IDs = new HashSet<String>();
+
+        for (int i = 0; i < allData.length; ++i) {
+            String reviewerID = allData[i][0];
+            if (!all_reviewer_IDs.contains(reviewerID)) {
+                all_reviewer_IDs.add(reviewerID);
+            }
+        }
+
+        int unique_reviewer_count = all_reviewer_IDs.size();
+        System.out.println("Unique Reviewers: " + unique_reviewer_count);
 
         }
 }
