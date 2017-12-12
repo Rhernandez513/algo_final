@@ -55,17 +55,32 @@ public class Algo_Final {
     public static void main(String[] args) throws IOException {
         System.out.println("Hello Algo Final!");
         final int line_count = 1689188;
-        final int lines_to_read = 3;
+        final int lines_to_read = 4;
         String[][] allData =  readDataFromFile(lines_to_read);
 
         Graph graph = new Graph();
-        graph.addVertex(allData[0][0]);
-        graph.addVertex(allData[0][1]);
-        graph.addEdge(allData[0][0], allData[0][1]);
 
-        if (graph.hasEdge(allData[0][0], allData[0][1])) {
-            System.out.println(graph);
+        for (int i = 0; i < lines_to_read; ++i) {
+            graph.addVertex(allData[i][0]);
         }
+
+        for (int i = 0; i < lines_to_read; ++i) {
+            graph.addVertex(allData[i][1]);
+        }
+
+
+        for (int i = 0; i < lines_to_read; ++i) {
+            String reviewerID = allData[i][0];
+            String asin = allData[i][1];
+
+            if(!graph.hasEdge(reviewerID, asin)) {
+                graph.addEdge(reviewerID, asin);
+            }
+        }
+
+
+        System.out.println(graph);
+
 
 
             // How many unique products and unique reviewers are there?
