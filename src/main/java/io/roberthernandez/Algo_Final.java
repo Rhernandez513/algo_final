@@ -13,7 +13,7 @@ public class Algo_Final {
         final int line_count = 1689188;
         final int fields_count = 9;
 
-        if (lines_to_read == 0) {
+        if (lines_to_read >= line_count) {
             lines_to_read = line_count;
         }
         // Retreived using the wc -l command on "resource_file"
@@ -26,7 +26,7 @@ public class Algo_Final {
         Scanner inputfile = new Scanner(file);
 
         String oneLine = "";
-        String[][] allData = new String[line_count][fields_count];
+        String[][] allData = new String[lines_to_read][fields_count];
 
 
         // Read file into 2 dimenstional array data struct
@@ -55,11 +55,17 @@ public class Algo_Final {
     public static void main(String[] args) throws IOException {
         System.out.println("Hello Algo Final!");
         final int line_count = 1689188;
+        final int lines_to_read = 3;
+        String[][] allData =  readDataFromFile(lines_to_read);
 
-        String[][] allData =  readDataFromFile(line_count);
+        Graph graph = new Graph();
+        graph.addVertex(allData[0][0]);
+        graph.addVertex(allData[0][1]);
+        graph.addEdge(allData[0][0], allData[0][1]);
 
-
-
+        if (graph.hasEdge(allData[0][0], allData[0][1])) {
+            System.out.println(graph);
+        }
 
 
             // How many unique products and unique reviewers are there?
